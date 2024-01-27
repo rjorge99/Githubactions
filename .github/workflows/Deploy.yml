@@ -5,7 +5,7 @@ on:
     branches:
       - main
 jobs:
-  Deploy:
+  Build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,6 +16,11 @@ jobs:
           node-version: '20'
       - name: Build
         run: npm install
+  ListContent:
+    needs: Deploy
+    runs-on: ubuntu-latest
+    steps:
       - name: Content
         run: ls -la
+      
         
