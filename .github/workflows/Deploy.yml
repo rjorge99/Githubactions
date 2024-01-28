@@ -8,21 +8,28 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Main
         uses: actions/checkout@v4
-      - name: Setup node
+
+      - name: Install node
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-      - name: Build
+
+      - name: Install dependencies
         run: npm install
-      - name: Content
-        run: ls -la
-      - name: Create artifact
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: 'dist'
-          path: 'dist'
+          path: 'dist/**'
+          if-no-files-found: error
+          retention-days: 90
+          
   ListContent:
     needs: Build
     runs-on: ubuntu-latest
